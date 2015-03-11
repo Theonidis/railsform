@@ -9,7 +9,9 @@ class ItemsController < ApplicationController
 
   def search
     if params[:search]
-      @items = Item.find_by title:(params[:search])
+      @items = Item.where("title LIKE (?)", "%#{params[:search]}%")
+      #@items = Item.find_by title:(params[:search])
+      #@items = @items.first
     else
       @items = Item.all
     end
@@ -72,7 +74,7 @@ class ItemsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_item
-      @item = Item.all
+      @item = Item.find(params[:id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

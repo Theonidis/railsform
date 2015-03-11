@@ -1,7 +1,17 @@
 Rails.application.routes.draw do
-  resources :items
 
-  get 'items/search' => 'items#search'
+
+get '/items/search' => 'items#search'
+resources :items
+
+#  resources :items do
+#    collection do 
+#      get 'items/search' => 'items#search'
+#    end
+#  end
+
+
+
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
