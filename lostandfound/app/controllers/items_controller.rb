@@ -9,12 +9,23 @@ class ItemsController < ApplicationController
   end
 
   def search
-    if params[:search]
-      @items = Item.all
-      if params[:type_id]
-        @items = Item.where(type_id: params[:type_id]) unless params[:type_id].to_s.eql?(Type.first.id.to_s)
+    if params[:and_or] == "And"
+      if params[:search]
+        @items = Item.all
+        if params[:type_id]
+          @items = Item.where(type_id: params[:type_id]) unless params[:type_id].to_s.eql?(Type.first.id.to_s)
+        end
+        @items = @items.where("title LIKE (?)", "%#{params[:search]}%")
       end
-      @items = @items.where("title LIKE (?)", "%#{params[:search]}%")
+    else
+      if params[:search]
+        @items = Item.all
+        if params[:type_id]
+          @items_to_add = Item.where(type_id: params[:type_id]) unless params[:type_id].to_s.eql?(Type.first.id.to_s)
+        end
+        @items = @items.where("title LIKE (?)", "%#{params[:search]}%") unless @items_to_add == @items
+        @items_to_add.each {|x| @items.push(x) unless ((@items.find_by title:(x.title)).nil? == false)}
+      end
     end
   end
 

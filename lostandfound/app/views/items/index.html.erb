@@ -53,6 +53,7 @@ The search form for item names
 -->
 
 <%= form_tag('/items/search', :method=>:get) do %>
+  <%= select_tag "and_or", "<option>And</option><option>Or</option>".html_safe %>
   <%= select_tag "type_id", options_from_collection_for_select(Type.all, "id", "title") %>
 
     Name: <%= text_field_tag :search, params[:search]%>

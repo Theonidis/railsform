@@ -32,6 +32,7 @@
 <%= link_to 'New Item', new_item_path %>
 <%= link_to 'Back to Item Listing', items_url %>
 
+<!--
 <%= form_tag('/items/search', :method=>:get) do %>
   <%= select_tag "type_id", options_from_collection_for_select(Type.all, "id", "title") %>
 
@@ -39,3 +40,4 @@
      <%= submit_tag "Search", :name => nil%>
      
 <% end %>
+-->
