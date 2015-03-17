@@ -5,15 +5,16 @@ class ItemsController < ApplicationController
   # GET /items.json
   def index
     @items = Item.all
+    @types = Type.all
   end
 
   def search
     if params[:search]
-      @items = Item.where("title LIKE (?)", "%#{params[:search]}%")
-      #@items = Item.find_by title:(params[:search])
-      #@items = @items.first
-    else
       @items = Item.all
+      if params[:type_id]
+        @items = Item.where(type_id: params[:type_id]) unless params[:type_id].to_s.eql?(Type.first.id.to_s)
+      end
+      @items = @items.where("title LIKE (?)", "%#{params[:search]}%")
     end
   end
 
